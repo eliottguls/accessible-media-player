@@ -1,3 +1,7 @@
+# Authors
+- Eliott GUILLOSSOU
+- Killian GOUGEON
+- Youen LE BIHAN
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
