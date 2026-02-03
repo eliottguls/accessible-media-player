@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*Focus visible pour l'accessibilité*/
+:focus-visible {
+  outline: 3px solid #d35400;
+  outline-offset: 2px;
+}
+
+body {
+  @apply bg-swedish-white text-swedish-charcoal font-sans;
+}
