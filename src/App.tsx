@@ -1,46 +1,65 @@
-import React from 'react';
+'use client'
+import { useState} from "react";
 
 function App() {
+
+  const [adEnabled, setAdEnabled] = useState(false);
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100">
-      <section className="mx-auto flex min-h-screen max-w-4xl flex-col items-center justify-center gap-8 px-6 text-center">
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-8 shadow-xl">
-          <h1 className="mb-3 text-4xl font-bold tracking-tight text-emerald-400">
-            Tailwind actif ✅
-          </h1>
-          <p className="text-lg text-slate-200">
-            Si ce texte est vert, Tailwind fonctionne.
-          </p>
-          <p className="mt-4 text-sm text-slate-400">
-            Fichier : <span className="rounded bg-slate-800 px-2 py-1">src/App.tsx</span>
-          </p>
-        </div>
+    <>
+      <a 
+        href="#main-content" 
+        className="absolute top-[-100px] left-0 bg-indigo-700 text-white p-3 z-50 transition-all focus:top-0 font-bold rounded-br-lg shadow-lg"
+      >
+        Aller au contenu principal
+      </a>
 
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <span className="rounded-full bg-rose-500 px-3 py-1 text-sm font-semibold text-white">
-            Rouge
-          </span>
-          <span className="rounded-full bg-amber-400 px-3 py-1 text-sm font-semibold text-slate-900">
-            Jaune
-          </span>
-          <span className="rounded-full bg-sky-500 px-3 py-1 text-sm font-semibold text-white">
-            Bleu
-          </span>
-          <span className="rounded-full bg-violet-500 px-3 py-1 text-sm font-semibold text-white">
-            Violet
-          </span>
+      <div className="w-full lg:h-screen lg:overflow-hidden flex flex-col bg-gray-50 text-gray-900 font-sans">
+        <div className="flex-shrink-0 p-4 pb-2 bg-white shadow-sm z-10 relative">
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <h1 className="text-xl md:text-2xl font-extrabold tracking-tight text-gray-900 m-0">
+                  Titre
+                </h1>
+              </div>
+              
+              <button 
+                  onClick={() => setAdEnabled(!adEnabled)} 
+                  className={`
+                    text-sm px-4 py-2 rounded-full font-semibold transition-all shadow-sm
+                    ${adEnabled 
+                      ? 'bg-indigo-100 text-indigo-700 border-2 border-indigo-200' 
+                      : 'bg-white text-gray-600 border-2 border-gray-200 hover:bg-gray-100'}
+                  `}
+              >
+                {adEnabled ? "AD : Activée 🔈" : "Activer AD"}
+              </button>
+            </div>
+            Chapters
         </div>
+        <main id="main-content" className="flex-1 min-h-0 p-4 grid grid-cols-1 lg:grid-cols-4 gap-4 bg-gray-50">
+            <div className="lg:col-span-3 flex flex-col gap-4 h-full min-h-0">
+                <section aria-label="Lecteur vidéo" className="lg:h-1/2 w-full bg-black rounded-2xl overflow-hidden shadow-xl flex-shrink-0 min-h-[250px] ring-1 ring-black/10">
+                   <div className="h-full w-full flex items-center justify-center">
+                     Player
+                   </div>
+                </section>
+                <section aria-label="Carte interactive" className="lg:h-1/2 w-full bg-white rounded-2xl overflow-hidden shadow-xl relative z-0 flex-shrink-0 min-h-[250px] ring-1 ring-black/5">
+                    <div className="h-full w-full">
+                       Map
+                    </div>
+                </section>
 
-        <a
-          className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-emerald-300 transition hover:bg-emerald-500/20"
-          href="https://tailwindcss.com/docs/utility-first"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Voir la doc Tailwind
-        </a>
-      </section>
-    </main>
+            </div>
+            <div className="lg:col-span-1 h-full min-h-0">
+                <section className="h-[500px] lg:h-full flex flex-col rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5 bg-white">
+                  Chat
+                </section>
+            </div>
+
+        </main>
+        AudioDescriptionManager 
+      </div>
+    </>
   );
 }
 
