@@ -3,9 +3,14 @@ export interface FilmInfo {
   title: string;
   synopsis_url: string;
 }
+export interface Subtitles {
+  en: string;
+  fr: string;
+  es: string;
+}
 export interface FilmData {
   film: FilmInfo;
-  subtitles: undefined;
+  subtitles: Subtitles;
   audiodescription: undefined;
   chapters: undefined;
   poi: undefined;

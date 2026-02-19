@@ -1,9 +1,67 @@
 'use client'
-import { useState} from "react";
+import { useState, useRef, useEffect} from "react";
+import { FilmData } from "./types";
+import { fetchFilmData } from "./data";
 
 function App() {
-
   const [adEnabled, setAdEnabled] = useState(false);
+  const [filmData, setFilmData] = useState<FilmData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Use ref to prevent multiple fetch calls
+  const hasLoadedRef = useRef(false);
+
+  useEffect(() => {
+  // Prevent double fetch in strict mode
+  if (hasLoadedRef.current) return;
+  hasLoadedRef.current = true;
+
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      const data = await fetchFilmData();
+      setFilmData(data);
+      setError(null);
+    } catch (err) {
+      setError("Erreur lors du chargement de la vidéo. Veuillez réessayer.");
+      setFilmData(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  loadData();
+  }, []);
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mb-4"></div>
+          <p className="text-gray-600">Chargement de la vidéo...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error || !filmData) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <p className="text-red-600 font-semibold mb-4">{error || "Erreur lors du chargement"}</p>
+          <button 
+            onClick={() => globalThis.location.reload()}
+            className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700"
+          >
+            Réessayer
+          </button>
+        </div>
+      </div>
+    );
+  }
   return (
     <>
       <a 
@@ -18,7 +76,7 @@ function App() {
             <div className="flex justify-between items-center mb-4">
               <div>
                 <h1 className="text-xl md:text-2xl font-extrabold tracking-tight text-gray-900 m-0">
-                  Titre
+                  {filmData.film.title}
                 </h1>
               </div>
               
