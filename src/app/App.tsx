@@ -2,12 +2,15 @@
 import { useState, useRef, useEffect} from "react";
 import { FilmData } from "./types";
 import { fetchFilmData } from "./data";
+import Player from "../components/Player";
 
 function App() {
   const [adEnabled, setAdEnabled] = useState(false);
   const [filmData, setFilmData] = useState<FilmData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentTime, setCurrentTime] = useState(0);
+    const [seekTime, setSeekTime] = useState<number | undefined>(undefined);
 
   // Use ref to prevent multiple fetch calls
   const hasLoadedRef = useRef(false);
@@ -98,7 +101,12 @@ function App() {
             <div className="lg:col-span-3 flex flex-col gap-4 h-full min-h-0">
                 <section aria-label="Lecteur vidéo" className="lg:h-1/2 w-full bg-black rounded-2xl overflow-hidden shadow-xl flex-shrink-0 min-h-[250px] ring-1 ring-black/10">
                    <div className="h-full w-full flex items-center justify-center">
-                     Player
+                     <Player 
+                        videoUrl={filmData.film.file_url} 
+                        subtitles={filmData.subtitles}
+                        onTimeUpdate={setCurrentTime}
+                        seekTime={seekTime}
+                      />
                    </div>
                 </section>
                 <section aria-label="Carte interactive" className="lg:h-1/2 w-full bg-white rounded-2xl overflow-hidden shadow-xl relative z-0 flex-shrink-0 min-h-[250px] ring-1 ring-black/5">
