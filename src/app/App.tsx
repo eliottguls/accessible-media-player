@@ -4,6 +4,7 @@ import { FilmData } from "./types";
 import { fetchFilmData } from "./data";
 import Player from "../components/Player";
 import Chapters from "../components/Chapters";
+import MapDisplay from "../components/MapDisplay";
 
 function App() {
   const [adEnabled, setAdEnabled] = useState(false);
@@ -124,7 +125,7 @@ function App() {
                 </section>
                 <section aria-label="Carte interactive" className="lg:h-1/2 w-full bg-white rounded-2xl overflow-hidden shadow-xl relative z-0 flex-shrink-0 min-h-[250px] ring-1 ring-black/5">
                     <div className="h-full w-full">
-                       Map
+                       <MapDisplay pois={filmData.poi} onPoiClick={handleJump} />
                     </div>
                 </section>
 
