@@ -3,6 +3,7 @@ import { useState, useRef, useEffect} from "react";
 import { FilmData } from "./types";
 import { fetchFilmData } from "./data";
 import Player from "../components/Player";
+import Chapters from "../components/Chapters";
 
 function App() {
   const [adEnabled, setAdEnabled] = useState(false);
@@ -36,6 +37,14 @@ function App() {
 
   loadData();
   }, []);
+
+  const handleJump = (time: number) => {
+    setSeekTime(time);
+    // Reset seekTime after a short delay to allow the component to process it
+    setTimeout(() => {
+      setSeekTime(undefined);
+    }, 100);
+  };
 
   // Loading state
   if (loading) {
@@ -95,7 +104,11 @@ function App() {
                 {adEnabled ? "AD : Activée 🔈" : "Activer AD"}
               </button>
             </div>
-            Chapters
+            <Chapters 
+                data={filmData.chapters} 
+                onChapterClick={handleJump} 
+                currentTime={currentTime}
+            />
         </div>
         <main id="main-content" className="flex-1 min-h-0 p-4 grid grid-cols-1 lg:grid-cols-4 gap-4 bg-gray-50">
             <div className="lg:col-span-3 flex flex-col gap-4 h-full min-h-0">
